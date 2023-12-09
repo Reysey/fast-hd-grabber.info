@@ -1,0 +1,65 @@
+{% extends 'layout.twig' %}
+
+{% block title %}Notifications Manager{% endblock %}
+
+{% block head %}
+    <!-- Additional head content can be placed here -->
+{% endblock head %}
+
+{% block content %}
+    <div class="container">
+        <div class="row col-5 col-3-offset">
+            <form action="http://fast-hd-grabber.local/notifications/add" method="post" class="form-control mt-4">
+
+                <div class="form-group col-12 mb-3">
+                    <label for="NOTIFICATION_POST_ID" class="form-label">Notification Post ID:</label>
+                    <select id="NOTIFICATION_POST_ID" name="NOTIFICATION_POST_ID"  class="select2 form-control col-12" required>
+                        <option value="1">POST_TITLE 1</option>
+                        <option value="2">POST_TITLE 2</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="NOTIFICATION_SCHEDULED" class="form-label">Notification Scheduled:</label>
+                    <select id="NOTIFICATION_SCHEDULED" name="NOTIFICATION_SCHEDULED"  class="select2 form-control col-12" required>
+                        <option value="1">True</option>
+                        <option value="0">false</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="NOTIFICATION_TRIGGER_AT" class="form-label">Notification Trigger Date:</label>
+                    <input id="NOTIFICATION_TRIGGER_AT" type="datetime-local" name="NOTIFICATION_TRIGGER_AT col-12" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="NOTIFICATION_ENABLED" class="form-label">Notification Enabled:</label>
+                    <select id="NOTIFICATION_ENABLED" name="NOTIFICATION_ENABLED"  class="select2 form-control col-12" required>
+                        <option value="1">True</option>
+                        <option value="0">false</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            $(".select2").select2();
+            // SELECT 2 > Obligatoire pour que la recherche sur les modals soient fonctionnels
+            $('.select2').each(function() {
+                $(this).select2({
+                    dropdownParent: $(this).parent(),
+                    placeholder: "-"
+                });
+            });
+        })
+    </script>
+{% endblock %}

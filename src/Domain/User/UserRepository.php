@@ -17,4 +17,10 @@ interface UserRepository
      * @throws UserNotFoundException
      */
     public function findUserOfId(int $id): User;
+
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function addUser(User $user): void;
 }

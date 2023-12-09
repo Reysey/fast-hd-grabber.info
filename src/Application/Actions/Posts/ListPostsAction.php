@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\User;
+namespace App\Application\Actions\Posts;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ListUsersAction extends UserAction
+class ListPostsAction extends PostAction
 {
     /**
      * {@inheritdoc}
@@ -15,10 +15,10 @@ class ListUsersAction extends UserAction
     {
 
 
-        $users = $this->userRepository->findAll();
+        $posts = $this->postRepository->findAllPosts();
 
         $this->logger->info("Users list was viewed.");
 
-        return $this->respondWithData($users);
+        return $this->respondWithData($posts);
     }
 }

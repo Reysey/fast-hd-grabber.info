@@ -8,50 +8,76 @@ use JsonSerializable;
 
 class User implements JsonSerializable
 {
-    private ?int $id;
+    private ?int $userId;
 
-    private string $username;
+    private string $userEmail;
 
-    private string $firstName;
+    private string $userFullName;
 
-    private string $lastName;
-
-    public function __construct(?int $id, string $username, string $firstName, string $lastName)
+    public function __construct(?int $userId, string $userEmail, string $userFullName)
     {
-        $this->id = $id;
-        $this->username = strtolower($username);
-        $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
+        $this->userId = $userId;
+        $this->userEmail = strtolower($userEmail);
+        $this->userFullName = ucfirst($userFullName);
     }
 
-    public function getId(): ?int
+    /**
+     * @return string
+     */
+    public function getUserEmail(): string
     {
-        return $this->id;
+        return $this->userEmail;
     }
 
-    public function getUsername(): string
+    /**
+     * @param string $userEmail
+     */
+    public function setUserEmail(string $userEmail): void
     {
-        return $this->username;
+        $this->userEmail = $userEmail;
     }
 
-    public function getFirstName(): string
+    /**
+     * @return string
+     */
+    public function getUserFullName(): string
     {
-        return $this->firstName;
+        return $this->userFullName;
     }
 
-    public function getLastName(): string
+    /**
+     * @param string $userFullName
+     */
+    public function setUserFullName(string $userFullName): void
     {
-        return $this->lastName;
+        $this->userFullName = $userFullName;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int|null $userId
+     */
+    public function setUserId(?int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+
 
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'username' => $this->username,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
+            'USER_ID' => $this->userId,
+            'USER_EMAIL' => $this->userEmail,
+            'USER_FULLNAME' => $this->userFullName
         ];
     }
 }

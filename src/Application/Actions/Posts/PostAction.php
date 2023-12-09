@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\Actions\Posts;
+
+use App\Application\Actions\Action;
+use App\Domain\Post\PostRepository;
+use Psr\Log\LoggerInterface;
+
+abstract class PostAction extends Action
+{
+    protected PostRepository $postRepository;
+
+    public function __construct(LoggerInterface $logger, PostRepository $postRepository)
+    {
+        parent::__construct($logger);
+
+        $this->postRepository = $postRepository;
+    }
+}

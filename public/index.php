@@ -9,15 +9,30 @@ use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
+use App\Infrastructure\Persistence\User\PostRepo;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
-if (false) { // Should be set to true in production
+$containerBuilder->addDefinitions([
+    PDO::class => function () {
+        return new PDO('mysql:host=localhost;dbname=fast_hd_grabber_db', 'reysey', 'reysey');
+    },
+    PostRepo::class => function ($container) {
+        return new PostRepo($container->get(PDO::class));
+    },
+]);
+
+if (false) { // TODO: Should be set to true in production
 	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
+
 
 // Set up settings
 $settings = require __DIR__ . '/../app/settings.php';
@@ -38,6 +53,11 @@ $container = $containerBuilder->build();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
+
+$twig = Twig::create('../templates', ['cache' => false]);
+
+// Add Twig-View Middleware
+$app->add(TwigMiddleware::create($app, $twig));
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
